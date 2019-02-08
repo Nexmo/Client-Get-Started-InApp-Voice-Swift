@@ -115,9 +115,9 @@ extension MainViewController: NXMClientDelegate {
     func incomingCall(_ call: NXMCall) {
         print("📲 📲 📲 Incoming Call: \(call)")
         DispatchQueue.main.async {
-            let names: [String] = call.otherCallMembers?.compactMap({ participant -> String? in
+            let names: [String] = call.otherCallMembers.compactMap({ participant -> String? in
                 return (participant as? NXMCallMember)?.user.name
-            }) ?? []
+            })
             let alert = UIAlertController(title: "Incoming call from", message: names.joined(separator: ", "), preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Answer", style: .default, handler: { _ in
                 self.answer(call: call)
@@ -143,7 +143,7 @@ extension MainViewController: NXMClientDelegate {
     
     //MARK: Incoming call - Reject
     private func reject(call: NXMCall) {
-        call.decline { [weak self] error in
+        call.reject { [weak self] error in
             if let error = error {
                 print("error declining call: \(error.localizedDescription)")
             }
@@ -159,7 +159,7 @@ extension MainViewController: NXMClientDelegate {
 
 extension MainViewController: NXMCallDelegate {
 
-    func statusChanged(_ member: NXMCallMember!) {
+    func statusChanged(_ member: NXMCallMember) {
         //print("🤙🤙🤙 Call Status changed | member: \(String(describing: member.user.name))")
         print("🤙🤙🤙 Call Status changed | member status: \(String(describing: member.status.description()))")
         

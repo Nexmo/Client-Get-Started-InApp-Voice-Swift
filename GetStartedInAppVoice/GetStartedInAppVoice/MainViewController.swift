@@ -95,7 +95,7 @@ extension MainViewController: NXMClientDelegate {
 
 extension MainViewController: NXMCallDelegate {
 
-    func statusChanged(_ member: NXMCallMember!) {
+    func statusChanged(_ member: NXMCallMember) {
         
     }
     
