@@ -72,11 +72,19 @@ extension MainViewController {
                 return .callEnded(loggedInUser.callee)
             }
         }
-        switch call.status  {
-        case .disconnected:
-            return .callEnded(loggedInUser.callee)
-        case .connected:
+        switch call.myCallMember.status  {
+        case .dialling:
+            fallthrough
+        case .calling:
+            fallthrough
+        case .started:
+            fallthrough
+        case .answered:
             return .inCall(loggedInUser.callee)
+        case .completed:
+            fallthrough
+        case .cancelled:
+            return .callEnded(loggedInUser.callee)
         }
     }
     
